@@ -12,12 +12,9 @@ node {
      }
    }
    stage('Docker Build & Push') {
-     withCredentials([usernamePassword( credentialsId: 'docker-hub-credentials', usernameVariable: 'ftorres81', passwordVariable: 'top_maiden81')]) {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-         sh "docker login -u ${ftorres81} -p ${top_maiden81}"
-         def nuestraapp = docker.build("ftorres81/nodejsapp:${gitcommit}", ".")
-         nuestraapp.push()
-        }
+     docker.withRegistry('https://registry.hub.docker.com', 'ftorres') {
+       def nuestraapp = docker.build("ftorres81/nodejsapp:${gitcommit}", ".")
+       nuestraapp.push()
      }
    }
 }
